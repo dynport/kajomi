@@ -1,6 +1,6 @@
 # Kajomi
 
-TODO: Write a gem description
+Unofficial wrapper for the Kajomi Mail API.
 
 ## Installation
 
@@ -18,7 +18,41 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Using Kajomi with the [Mail](http://rubygems.org/gems/mail) library
+
+You can use Kajomi with the `mail` gem.
+
+``` bash
+gem install mail
+```
+
+To send a `Mail::Message` via Kajomi you’ll need to specify `Mail::Kajomi` as a delivery method for the message and specify the api key and user name:
+
+``` ruby
+message = Mail.new do
+  # ...
+  delivery_method Mail::Kajomi, api_key: 'your-api-key', user: 'your-user-name'
+end
+```
+
+#### Plain text message
+
+``` ruby
+require 'rubygems'
+require 'kajomi'
+require 'mail'
+
+message = Mail.new do
+  from 'sender@example.com'
+  to 'recipient@example.com'
+  subject 'My Subject'
+  body 'Hello World!'
+
+  delivery_method Mail::Kajomi, api_key: 'your-api-key', user: 'your-user-name'
+end
+
+message.deliver
+```
 
 ## Contributing
 
