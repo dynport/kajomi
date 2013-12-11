@@ -14,7 +14,6 @@ module Kajomi
 
     def deliver_message(message)
       message_data = message.to_kajomi_hash
-
       http_client = build_http_client
       http_client.add_header("sessid", generate_session_id)
       http_client.post("api/json/basic/mailrelay/relay", message_data)
@@ -31,7 +30,7 @@ module Kajomi
 
     def random_secret
       http_client = build_http_client
-      response = http_client.post("auth/#{shared_key}")
+      response = http_client.get("auth/#{shared_key}")
     end
   end
 end

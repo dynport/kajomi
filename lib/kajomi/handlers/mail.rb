@@ -5,7 +5,8 @@ module Mail
     def initialize(values)
       self.settings = {
         shared_key: nil,
-        secret_key: nil
+        secret_key: nil,
+        return_response: false
       }.merge(values)
     end
 
@@ -15,7 +16,12 @@ module Mail
       secret_key = settings.delete(:secret_key)
       api_client = ::Kajomi::ApiClient.new(shared_key, secret_key, settings)
       response = api_client.deliver_message(mail)
-      self
+
+      if settings[:return_response]
+        response
+      else
+        self
+      end
     end
   end
 end

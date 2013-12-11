@@ -16,7 +16,7 @@ describe Mail::Message do
 
     describe "a simple message" do
       it { should == {
-        "sender" => "sending@dynport.de",
+        "sender" => "sending@dynport.de".to_json,
         "_m" => [{
           "address" => "recipient@dynport.de",
           "type" => "TO"

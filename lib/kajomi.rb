@@ -1,3 +1,4 @@
+require "json"
 require "kajomi/version"
 require "kajomi/http_client"
 require "kajomi/api_client"
@@ -5,7 +6,13 @@ require "kajomi/message_extensions/mail"
 require "kajomi/handlers/mail"
 
 module Kajomi
-  attr_accessor :shared_key, :secret_key, :secure, :host, :path_prefix, :http_open_timeout, :http_read_timeout
+  attr_accessor :shared_key,
+    :secret_key,
+    :secure,
+    :host,
+    :path_prefix,
+    :http_open_timeout,
+    :http_read_timeout
 
   class DeliveryError < StandardError
     attr_accessor :code, :response

@@ -44,7 +44,7 @@ module Mail
       }
 
       options = {
-        "sender" => self['from'].to_s,
+        "sender" => JSON.dump(self['from'].to_s),
         "_m" => JSON.dump(recipients),
         "m" => JSON.dump(message)
       }

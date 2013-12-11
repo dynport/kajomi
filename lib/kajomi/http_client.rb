@@ -27,6 +27,13 @@ module Kajomi
       @http = build_http
     end
 
+    def get(path)
+      perform_request do |client|
+        request = Net::HTTP::Get.new(url_path(path), headers)
+        client.request(request)
+      end
+    end
+
     def post(path, data={})
       perform_request do |client|
         request = Net::HTTP::Post.new(url_path(path), headers)
@@ -48,7 +55,8 @@ module Kajomi
     end
 
     def perform_request
-      handle_response(yield(http))
+      response = yield(http)
+      handle_response(response)
     end
 
     def to_query_string(hash)
