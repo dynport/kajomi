@@ -18,6 +18,18 @@ Or install it yourself as:
 
 ## Usage
 
+### Fetch all lists from Kajomi Mail
+
+Return an array of Kajomi::Entities::List
+
+``` ruby
+require 'rubygems'
+require 'kajomi'
+
+api_client = Kajomi::ApiClient.new(shared_key, secret_key)
+lists = api_client.get_lists
+```
+
 ### Using Kajomi with the [Mail](http://rubygems.org/gems/mail) library
 
 You can use Kajomi with the `mail` gem.

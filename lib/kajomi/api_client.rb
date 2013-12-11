@@ -1,4 +1,5 @@
 require "kajomi/http_client"
+require "kajomi/entities"
 require "digest/sha1"
 require "base64"
 
@@ -14,14 +15,26 @@ module Kajomi
 
     def deliver_message(message)
       message_data = message.to_kajomi_hash
-      http_client = build_http_client
-      http_client.add_header("sessid", generate_session_id)
-      http_client.post("api/json/basic/mailrelay/relay", message_data)
+      response = http_client.post("api/json/basic/mailrelay/relay", message_data)
+      parsed response
+    end
+
+    def get_lists
+      response = http_client.get("api/json/basic/kjmservice/getLists")
+      parsed(response).map do |hash|
+        Kajomi::Entities::List.new(hash)
+      end
     end
 
   protected
+    def http_client
+      @http_client ||= build_http_client
+    end
+
     def build_http_client
-      HttpClient.new(options)
+      client = HttpClient.new(options)
+      client.add_header("sessid", generate_session_id)
+      client
     end
 
     def generate_session_id
@@ -29,8 +42,11 @@ module Kajomi
     end
 
     def random_secret
-      http_client = build_http_client
-      response = http_client.get("auth/#{shared_key}")
+      response = HttpClient.new(options).get("auth/#{shared_key}")
+    end
+
+    def parsed(response)
+      JSON.parse(response)
     end
   end
 end
