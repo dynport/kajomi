@@ -11,7 +11,7 @@ describe "Mail delivery" do
       body "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "
            "eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
-      delivery_method Mail::Kajomi, api_key: "KAJOMI_API_TEST_KEY", user: "dynport"
+      delivery_method Mail::Kajomi, secret_key: "KAJOMI_API_TEST_KEY", shared_key: "dynport"
     end
   }
 

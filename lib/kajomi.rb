@@ -5,7 +5,7 @@ require "kajomi/message_extensions/mail"
 require "kajomi/handlers/mail"
 
 module Kajomi
-  attr_accessor :user, :api_key, :secure, :host, :path_prefix, :http_open_timeout, :http_read_timeout
+  attr_accessor :shared_key, :secret_key, :secure, :host, :path_prefix, :http_open_timeout, :http_read_timeout
 
   class DeliveryError < StandardError
     attr_accessor :code, :response
@@ -30,7 +30,7 @@ module Kajomi
   end
 
   def build_api_client
-    Kajomi::ApiClient.new(self.user, self.api_key, {
+    Kajomi::ApiClient.new(self.shared_key, self.secret_key, {
       secure: self.secure,
       host: self.host,
       path_prefix: self.path_prefix,

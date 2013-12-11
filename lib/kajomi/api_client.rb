@@ -4,11 +4,11 @@ require "base64"
 
 module Kajomi
   class ApiClient
-    attr_reader :user, :api_key, :options
+    attr_reader :shared_key, :secret_key, :options
 
-    def initialize(user, api_key, options = {})
-      @user = user
-      @api_key = api_key
+    def initialize(shared_key, secret_key, options={})
+      @shared_key = shared_key
+      @secret_key = secret_key
       @options = options
     end
 
@@ -26,12 +26,12 @@ module Kajomi
     end
 
     def generate_session_id
-      Base64.encode64(Digest::SHA1.digest("#{api_key}#{random_secret}")).chop
+      Base64.encode64(Digest::SHA1.digest("#{secret_key}#{random_secret}")).chop
     end
 
     def random_secret
       http_client = build_http_client
-      response = http_client.post("auth/#{user}")
+      response = http_client.post("auth/#{shared_key}")
     end
   end
 end

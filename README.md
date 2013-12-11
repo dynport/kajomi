@@ -26,12 +26,12 @@ You can use Kajomi with the `mail` gem.
 gem install mail
 ```
 
-To send a `Mail::Message` via Kajomi you’ll need to specify `Mail::Kajomi` as a delivery method for the message and specify the api key and user name:
+To send a `Mail::Message` via Kajomi you’ll need to specify `Mail::Kajomi` as a delivery method for the message and specify the secret key and shared key:
 
 ``` ruby
 message = Mail.new do
   # ...
-  delivery_method Mail::Kajomi, api_key: 'your-api-key', user: 'your-user-name'
+  delivery_method Mail::Kajomi, secret_key: 'your-secret-key', shared_key: 'your-shared-key'
 end
 ```
 
@@ -48,11 +48,15 @@ message = Mail.new do
   subject 'My Subject'
   body 'Hello World!'
 
-  delivery_method Mail::Kajomi, api_key: 'your-api-key', user: 'your-user-name'
+  delivery_method Mail::Kajomi, secret_key: 'your-secret-key', shared_key: 'your-shared-key'
 end
 
 message.deliver
 ```
+
+### Using Kajomi with ActionMailer / Rails
+
+To use Kajomi as a ActionMailer adapter see the `kajomi-rails` gem
 
 ## Contributing
 
