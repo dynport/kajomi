@@ -35,6 +35,20 @@ module Kajomi
       Kajomi::Entities::List.new(parsed(response))
     end
 
+    def import_users(list, users=[])
+      user_list = {
+        name: "abonnenten",
+        _columns: ["email", "fname", "lname"],
+        _rows: users.map(&:to_array)
+      }
+      data = {
+        l: list.to_json,
+        t: JSON.dump(user_list)
+      }
+      response = http_client.post("api/json/basic/kjmservice/importUsers", data)
+      parsed response
+    end
+
   protected
     def http_client
       @http_client ||= build_http_client

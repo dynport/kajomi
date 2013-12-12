@@ -9,3 +9,4 @@ module Kajomi
 end
 
 require "kajomi/entities/list"
+require "kajomi/entities/user"

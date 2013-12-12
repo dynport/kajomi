@@ -16,6 +16,7 @@ Or install it yourself as:
 
     $ gem install kajomi
 
+
 ## Usage
 
 ### Fetch all lists from Kajomi Mail
@@ -23,9 +24,6 @@ Or install it yourself as:
 Return an array of Kajomi::Entities::List
 
 ``` ruby
-require 'rubygems'
-require 'kajomi'
-
 api_client = Kajomi::ApiClient.new(shared_key, secret_key)
 lists = api_client.get_lists
 ```
@@ -35,13 +33,21 @@ lists = api_client.get_lists
 Duplicate an existing list (identified by listnum) and return the new list as an Kajomi::Entities::List object
 
 ``` ruby
-require 'rubygems'
-require 'kajomi'
-
 list = Kajomi::Entities::List.new(listnum: 3)
-
 api_client = Kajomi::ApiClient.new(shared_key, secret_key)
 new_list = api_client.duplicate_list(list, "My new list")
+```
+
+### Import users to a list
+
+Import an array of users into an existing list:
+
+``` ruby
+users = []
+users << Kajomi::Entities::User.new(email: "manuel.boy@dynport.de", firstname: "Manuel", lastname: "Boy")
+list = Kajomi::Entities::List.new(listnum: <some-list-number>)
+client = Kajomi::ApiClient.new(shared_key, secret_key)
+response = client.import_users(list, users)
 ```
 
 ### Using Kajomi with the [Mail](http://rubygems.org/gems/mail) library
