@@ -30,6 +30,20 @@ api_client = Kajomi::ApiClient.new(shared_key, secret_key)
 lists = api_client.get_lists
 ```
 
+### Duplicate a list
+
+Duplicate an existing list (identified by listnum) and return the new list as an Kajomi::Entities::List object
+
+``` ruby
+require 'rubygems'
+require 'kajomi'
+
+list = Kajomi::Entities::List.new(listnum: 3)
+
+api_client = Kajomi::ApiClient.new(shared_key, secret_key)
+new_list = api_client.duplicate_list(list, "My new list")
+```
+
 ### Using Kajomi with the [Mail](http://rubygems.org/gems/mail) library
 
 You can use Kajomi with the `mail` gem.

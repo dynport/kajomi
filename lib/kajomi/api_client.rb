@@ -26,6 +26,15 @@ module Kajomi
       end
     end
 
+    def duplicate_list(list, title)
+      data = {
+        l: list.to_json,
+        title: JSON.dump(title)
+      }
+      response = http_client.post("api/json/basic/kjmservice/duplicateList", data)
+      Kajomi::Entities::List.new(parsed(response))
+    end
+
   protected
     def http_client
       @http_client ||= build_http_client
