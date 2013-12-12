@@ -35,6 +35,24 @@ module Kajomi
       Kajomi::Entities::List.new(parsed(response))
     end
 
+    def query_users(list, field, value)
+      data = {
+        l: list.to_json,
+        field: JSON.dump(field),
+        value: JSON.dump(value)
+      }
+      response = http_client.post("api/json/basic/kjmservice/queryUsers", data)
+      parsed_response = parsed(response)
+      column_indexes = {
+        uid: parsed_response["_columns"].index("uid"),
+        firstname: parsed_response["_columns"].index("fname"),
+        lastname: parsed_response["_columns"].index("lname"),
+      }
+      parsed_response.fetch("_rows").map do |row|
+        Kajomi::Entities::User.new(uid: row[column_indexes[:uid]], lastname: row[column_indexes[:lastname]], firstname: row[column_indexes[:firstname]])
+      end
+    end
+
     def import_users(list, users=[])
       user_list = {
         name: "abonnenten",
@@ -47,6 +65,18 @@ module Kajomi
       }
       response = http_client.post("api/json/basic/kjmservice/importUsers", data)
       parsed response
+    end
+
+    def remove_users(users=[])
+      user_list = {
+        name: "users",
+        _columns: ["uid"],
+        _rows: users.map { |user| [user.uid] }
+      }
+      data = {
+        t: JSON.dump(user_list)
+      }
+      response = http_client.post("api/json/basic/kjmservice/removeUsers", data)
     end
 
   protected

@@ -28,9 +28,19 @@ api_client = Kajomi::ApiClient.new(shared_key, secret_key)
 lists = api_client.get_lists
 ```
 
+### Query users
+
+Find users by attribute and return an array of Kajomi::Entities::User:
+
+``` ruby
+list = Kajomi::Entities::List.new(listnum: 3)
+client = Kajomi::ApiClient.new(shared_key, secret_key)
+users = client.query_users(list, "email", "<some-email-address>")
+```
+
 ### Duplicate a list
 
-Duplicate an existing list (identified by listnum) and return the new list as an Kajomi::Entities::List object
+Duplicate an existing list (identified by listnum) and return the new list as an Kajomi::Entities::List object:
 
 ``` ruby
 list = Kajomi::Entities::List.new(listnum: 3)
@@ -45,10 +55,23 @@ Import an array of users into an existing list:
 ``` ruby
 users = []
 users << Kajomi::Entities::User.new(email: "manuel.boy@dynport.de", firstname: "Manuel", lastname: "Boy")
-list = Kajomi::Entities::List.new(listnum: <some-list-number>)
+list = Kajomi::Entities::List.new(listnum: "<some-list-number>")
 client = Kajomi::ApiClient.new(shared_key, secret_key)
 response = client.import_users(list, users)
 ```
+
+### Remove users
+
+Remove users from the system identified by their uid:
+
+``` ruby
+users = []
+users << Kajomi::Entities::User.new(uid: "<some-uid>")
+client = Kajomi::ApiClient.new(shared_key, secret_key)
+response = client.remove_users(users)
+```
+
+*Note: When removing users the API return typically an empty string and not a valid JSON response*
 
 ### Using Kajomi with the [Mail](http://rubygems.org/gems/mail) library
 

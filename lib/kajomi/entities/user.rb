@@ -3,7 +3,7 @@ require "json"
 module Kajomi
   module Entities
     class User < Base
-      attr_accessor :email, :firstname, :lastname
+      attr_accessor :uid, :email, :firstname, :lastname
 
       def initialize(attrs={})
         attrs.each do |key, value|
