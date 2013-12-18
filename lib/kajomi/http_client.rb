@@ -101,7 +101,7 @@ module Kajomi
     end
 
     def code_and_message_from_response(response)
-      body = JSON.parse(response.body)
+      body = MultiJson.load(response.body)
       [body["code"], body["msg"]]
     end
   end

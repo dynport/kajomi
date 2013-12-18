@@ -1,4 +1,4 @@
-require "json"
+require "multi_json"
 require "kajomi/version"
 require "kajomi/http_client"
 require "kajomi/api_client"

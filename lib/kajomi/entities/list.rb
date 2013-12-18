@@ -17,7 +17,7 @@ module Kajomi
       end
 
       def to_json
-        JSON.dump({
+        MultiJson.dump({
           listnum: @listnum,
           title: @title,
           sende: @sende,

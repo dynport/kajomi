@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rubygems'
 require 'mail'
 require 'kajomi'
-require 'json'
+require 'multi_json'
 require 'vcr'
 require 'webmock'
 require 'active_support/inflector'

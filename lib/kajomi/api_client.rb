@@ -29,7 +29,7 @@ module Kajomi
     def duplicate_list(list, title)
       data = {
         l: list.to_json,
-        title: JSON.dump(title)
+        title: MultiJson.dump(title)
       }
       response = http_client.post("api/json/basic/kjmservice/duplicateList", data)
       Kajomi::Entities::List.new(parsed(response))
@@ -38,8 +38,8 @@ module Kajomi
     def query_users(list, field, value)
       data = {
         l: list.to_json,
-        field: JSON.dump(field),
-        value: JSON.dump(value)
+        field: MultiJson.dump(field),
+        value: MultiJson.dump(value)
       }
       response = http_client.post("api/json/basic/kjmservice/queryUsers", data)
       parsed_response = parsed(response)
@@ -61,7 +61,7 @@ module Kajomi
       }
       data = {
         l: list.to_json,
-        t: JSON.dump(user_list)
+        t: MultiJson.dump(user_list)
       }
       response = http_client.post("api/json/basic/kjmservice/importUsers", data)
       parsed response
@@ -74,7 +74,7 @@ module Kajomi
         _rows: users.map { |user| [user.uid] }
       }
       data = {
-        t: JSON.dump(user_list)
+        t: MultiJson.dump(user_list)
       }
       response = http_client.post("api/json/basic/kjmservice/removeUsers", data)
     end
@@ -99,7 +99,7 @@ module Kajomi
     end
 
     def parsed(response)
-      JSON.parse(response)
+      MultiJson.load(response)
     end
   end
 end
